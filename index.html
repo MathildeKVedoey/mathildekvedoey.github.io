@@ -1,0 +1,153 @@
+<!-- Header -->
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Balloon</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/x-icon" href="images/balloon.ico">
+  <link rel=”stylesheet” href=”https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css”rel=”nofollow” integrity=”sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I” crossorigin=”anonymous”>
+
+</head>
+
+<body>
+
+  <!-- This is the countdown timer -->
+  <div id="ten-countdown"></div>
+
+  <script>
+    function countdown(elementName, minutes, seconds) {
+      var element, endTime, hours, mins, msLeft, time;
+
+      function twoDigits(n) {
+        return (n <= 9 ? "0" + n : n);
+      }
+
+      function updateTimer() {
+        msLeft = endTime - (+new Date);
+        if (msLeft < 1000) {
+          element.innerHTML = "Time is up!";
+        } else {
+          time = new Date(msLeft);
+          hours = time.getUTCHours();
+          mins = time.getUTCMinutes();
+          element.innerHTML = (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
+          setTimeout(updateTimer, time.getUTCMilliseconds() + 500);
+        }
+      }
+
+      element = document.getElementById(elementName);
+      endTime = (+new Date) + 1000 * (60 * minutes + seconds) + 500;
+      updateTimer();
+    }
+
+    countdown("ten-countdown", 10, 0);
+
+    // When the countdown has ended it should move us to the next slide.
+    // Not sure, but perhaps the user could choose between 3, 6 or 9 minutes.
+  </script>
+
+  <center>
+
+    <h1 class="jumbotron">Hello there</h1>
+
+
+    <!-- The music player is supposed to autoplay items, it currently does not. -->
+
+    <audio controls autoplay loop>
+      <source src="music/song.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <h1 class="heading">What are you thinking about?</h1>
+    <p class="minddump">Dump your mind of anything you can think of below: </p>
+
+    <form>
+      <input id="myInput" type="text" name="writeHere" oninput="textSubmittor()" placeholder="Dedicate each thought to a balloon">
+    </form>
+
+    <p>Press "Enter when you want to release the balloon"</p>
+
+    <!-- The search box is supposed to show 3 different suggestions for what to write, switching slowly, easing in and out, until the user starts to write something.
+    When the user writes it is supposed to be written on the balloon as well, with ballon writing sounds as the user types.
+    When the user has pressed enter the balloon is released, and a new balloon appears softly after a second or two.
+    The balloons that bounce around the screen should bounce on each other and make new trajectories were they to collide.
+    There should be a maximum number of balloons in relation to the screen size perhaps.
+    When the time is up, the balloons are to be frozen, and prompt the user to pop the last of them, and drag the ones that are valuable into a hand that keeps them. -->
+
+
+    <div onclick="balloonKiller();" class="balloon">
+      <div class="ball">
+        <div class="innerBall">
+          <p id="ballongtxt">Your thoughts will be printed here and when you are finished just press enter</p>
+        </div>
+      </div>
+      <div class="stick"></div>
+    </div>
+
+  </center>
+
+  <script>
+    function textSubmittor() {
+      var val = document.querySelector("input").value;
+      var skrift = document.getElementById("ballongtxt");
+      skrift.innerHTML = val;
+
+    }
+  </script>
+
+  <script>
+    var input = document.getElementById("myInput");
+    input.addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        document.getElementById("myBtn").click();
+      }
+    });
+  </script>
+
+  <!-- This script creates a copy of the current balloon.
+Erases the current balloon.  -->
+  <script>
+    function balloonKiller() {
+      document.querySelector("input").value = " ";
+      var val = document.querySelector("input").value;
+      var skrift = document.getElementById("ballongtxt");
+      skrift.innerHTML = val;
+      document.getElementById("audio").play;
+
+    }
+  </script>
+
+  <!-- This script will save the message when enter is pushed.
+Create a ballloon and send it away. -->
+
+
+
+
+  <!-- <script>
+  let play = function(){
+    document.getElementById("audio").play()
+  }
+
+  </script>
+
+  <button onclick="play()">Play File</button>
+  <audio id="audio" src="music/popsound.mp3"></audio> -->
+
+
+    <svg viewBox="0 0 425 300">
+  <path id="curve" d="M6,150C49.63,93,105.79,36.65,156.2,47.55,207.89,58.74,213,131.91,264,150c40.67,14.43,108.57-6.91,229-145" />
+  <text x="25">
+    <textPath xlink:href="#curve">
+      Dangerous Curves Ahead
+    </textPath>
+  </text>
+</svg>
+
+
+</body>
+
+</html>
